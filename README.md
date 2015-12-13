@@ -1,2 +1,1 @@
-# Gourmet
-Database Management System
+# Bee-Gourmet
