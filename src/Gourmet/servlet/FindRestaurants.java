@@ -50,9 +50,37 @@ public class FindRestaurants extends HttpServlet{
 		// Retrieve and validate name.
 		String rid = req.getParameter("restaurantId");
 		String name = req.getParameter("restaurantName");
-		String zipcode = req.getParameter("zip");
 		String priceRange = req.getParameter("priceRange");
+		String star = req.getParameter("star");
+		String city = req.getParameter("city");
+		String cuisineType = req.getParameter("cuisineType");
+		String goodFor = req.getParameter("goodFor");
+		String wifi = req.getParameter("wifi");
+		String creditCard = req.getParameter("creditCard");
 		
+		System.out.print( "wifi is:" + wifi);
+		
+		Map<String, String> criteria = new HashMap<>();
+		criteria.put("Restaurants.restaurantid", rid);
+		criteria.put("restaurantname", name);
+		criteria.put("priceRange", priceRange);
+		criteria.put("star", star);
+		criteria.put("city", city);
+		criteria.put("cuisineType", cuisineType);
+		criteria.put("goodFor", goodFor);
+		criteria.put("WIFI", wifi);
+		criteria.put("AcceptsCreditCard", creditCard);
+		
+		System.out.print( "Name is:" + name);
+		try {
+			restaurantList = restaurantsDao.getRestaurantByCriteria(criteria);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new IOException(e);
+		}
+		req.setAttribute("restaurants", restaurantList);
+		/*
 		if(rid != null && !rid.trim().isEmpty()) {
 			// Retrieve Restaurants, and store as a message.
 			try {
@@ -63,40 +91,7 @@ public class FindRestaurants extends HttpServlet{
 			
 			req.setAttribute("restaurants", restaurantList);
 			
-		}else if(name != null && !name.trim().isEmpty()) {
-			// Retrieve Restaurants, and store as a message.
-			try {
-				restaurantList = restaurantsDao.getRestaurantByName(name);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new IOException(e);
-			}
-
-			req.setAttribute("restaurants", restaurantList);
-			
-		} else if(zipcode != null && !zipcode.trim().isEmpty()){
-			int zip = Integer.parseInt(zipcode);
-			// Retrieve Restaurants, and store as a message.
-			try {
-				restaurantList = restaurantsDao.getRestaurantsByZip(zip);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new IOException(e);
-			}
-			req.setAttribute("restaurants", restaurantList);
-			
-		} else if(priceRange != null && !priceRange.trim().isEmpty()){
-			int price = Integer.parseInt(priceRange);
-			try {
-				restaurantList = restaurantsDao.getRestaurantsByPriceRange(price);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new IOException(e);
-			}
-
-			req.setAttribute("restaurants", restaurantList);
-			
-		}
+		} */
 		req.getRequestDispatcher("/FindRestaurants.jsp").forward(req, resp);
 	}
 }

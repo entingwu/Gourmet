@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 public class ReviewsDao {
@@ -116,7 +117,76 @@ public class ReviewsDao {
 		}
 		return null;
 	}
+	
+	public List<Reviews> getReviewsByCriteria(Map<String,String> criteria) throws SQLException{
+		List<Reviews> reviewList = new ArrayList<Reviews>();
+		String base = "SELECT ReviewId,UserId,RestaurantId,Review,Created,Rating "
+				+ "FROM Reviews  "
+				+ "WHERE ";
+		String restrictionSubQuery = "";
+		boolean isValid = false;
+		for(String col : criteria.keySet()){
+			if(criteria.get(col) != null && !criteria.get(col).isEmpty()){
+				isValid = true;
+				String value = criteria.get(col);
+				if(!col.equals("UserId")){
+					value = "'" + value + "'";
+				}
+				restrictionSubQuery += col + "=" + value + " and ";
+			}
+		}
+		if (isValid = false) {
+   		 return null;
+   	 	}
 
+		restrictionSubQuery = restrictionSubQuery.substring(0,restrictionSubQuery.length()-4);
+		String query = base + restrictionSubQuery +';';
+		
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(query);
+			results = selectStmt.executeQuery();
+		
+			UsersDao usersDao = UsersDao.getInstance();
+			RestaurantsDao restaurantsDao = RestaurantsDao.getInstance();
+			
+			while(results.next()) {
+				int reviewId = results.getInt("ReviewId");
+				int userId = results.getInt("UserId");
+				String restaurantId = results.getString("RestaurantId");
+				String reviewcontext = results.getString("Review");
+				Date created = null;
+				try {
+					created = new Date(results.getTimestamp("Created").getTime());
+				} catch (SQLException e) {
+					continue;
+				}
+				float rating = results.getFloat("Rating");
+
+				Users user = usersDao.getUserFromUserId(userId);
+				Restaurants restaurant = restaurantsDao.getRestaurantById(restaurantId);
+				Reviews review = new Reviews(reviewId, user, restaurant, reviewcontext, created, rating);
+				reviewList.add(review);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return reviewList;
+	}
 	
 	public List<Reviews> getReviewsByUserId(int userId) throws SQLException {
 		List<Reviews> reviews = new ArrayList<Reviews>();
@@ -136,7 +206,6 @@ public class ReviewsDao {
 			UsersDao usersDao = UsersDao.getInstance();
 			RestaurantsDao restaurantsDao = RestaurantsDao.getInstance();
 			while(results.next()) {
-				System.out.print(" running here " + '\n');
 				int reviewId = results.getInt("ReviewId");
 				int resultuserId = results.getInt("UserId");
 				String restaurantId = results.getString("RestaurantId");
@@ -179,6 +248,7 @@ public class ReviewsDao {
 						+ "WHERE RestaurantId=?;";
 		Connection connection = null;
 		PreparedStatement selectStmt = null;
+		System.out.print(selectReviews);
 		ResultSet results = null;
 		try {
 			connection = connectionManager.getConnection();

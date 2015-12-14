@@ -63,27 +63,101 @@
 	<h1>FIND RESTAURANTS</h1>
 	<div class="signin">
 			<form action="findrestaurants" method="post">
-			 <!--  <p>
-				<div class="user"><label for="restaurantId">RESTAURANT ID</label>
-				<input type="text" class="user" id="restaurantId" name= "restaurantId" value= "${fn:escapeXml(param.restaurantId)}" 
-				       onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'XYZ';}"></div>
-			  </p>-->
+			  <p>
+				<div class="user"><label for="restaurantId"><h5>RESTAURANT ID</h5></label>
+				<input type="text" class="user" id="restaurantId" name= "restaurantId" value= "${fn:escapeXml(param.restaurantId)}" ></div>
+			  </p>
 		      <p>
 				<div class="pass"><label for="restaurantName"><h5>NAME</h5></label>
 				<input type="text" class="pass" id="restaurantName" name= "restaurantName" value= "${fn:escapeXml(param.restaurantName)}"
 				      ></div>
 		      </p>
 		      <p>
-				<div class="pass"><label for="zip"><h5>ZIP CODE</h5></label>
-				<input type="text" class="pass" id="zip" name="zip" value="${fn:escapeXml(param.zip)}"
-				      ></div>
-				<div class="clear"></div>
-			  </p>
-		      <p>
 				<div class="user"><label for="priceRange"><h5>PRICE RANGE</h5></label>
 				<input type="text" class="user" id="priceRange" name="priceRange" value="${fn:escapeXml(param.priceRange)}"
 				      ></div>
 		      </p>
+		      <p>
+				<div class="user"><label for="star"><h5>STAR</h5></label>
+				<input type="text" class="user" id="star" name="star" value="${fn:escapeXml(param.star)}"
+				      ></div>
+		      </p>
+			<p>
+			<div class="pass" style= "color: #ffffff"><label for="city"><h5>CITY</h5></label>
+			</br>
+			<select class="custom-select" name="city">
+				<option value="" disabled selected>Choose City</option>
+				<option value="Phoenix"><h5>Phoenix</h5></option>
+				<option value="Edinburgh"><h5>Edinburgh</h5></option>
+				<option value="Charlotte"><h5>Charlotte</h5></option>
+				<option value="Las Vegas"><h5>Las Vegas</h5></option>
+				<option value="Pittsburgh"><h5>Pittsburgh</h5></option>
+				<option value="Madison"><h5>Madison</h5></option>
+				<option value="Montreal"><h5>Montreal</h5></option>
+				<option value="Mesa"><h5>Mesa</h5></option>
+				<option value="Gilbert"><h5>Gilbert</h5></option>
+				<option value="Scottsdale"><h5>Scottsdale</h5></option>
+				<option value="Musselburgh"><h5>Musselburgh</h5></option>
+				<option value="Karlsruhe"><h5>Karlsruhe</h5></option>
+				<option value="Tempe"><h5>Tempe</h5></option>
+				<option value="Henderson"><h5>Henderson</h5></option>
+				<option value="Buckeye"><h5>Buckeye</h5></option>
+				<option value="Verdun"><h5>Verdun</h5></option>
+			</select>
+		    </div>
+		    </p>
+		    </br>
+		    <p>
+			<div class="pass" style= "color: #ffffff"><label for="cuisineType"><h5>CUISINE TYPE</h5></label>
+			</br>
+			<select class="custom-select" name="cuisineType">
+				<option value="" disabled selected>Choose Cuisine Type</option>
+				<option value="Bars"><h5>Bars</h5></option>
+				<option value="Mexican"><h5>Mexican</h5></option>
+				<option value="Chinese"><h5>Chinese</h5></option>
+				<option value="AmericanNew"><h5>AmericanNew</h5></option>
+				<option value="AmericanTraditional"><h5>AmericanTraditional</h5></option>
+				<option value="Sandwiches"><h5>Sandwiches</h5></option>
+				<option value="Seafood"><h5>Seafood</h5></option>
+				<option value="Buffets"><h5>Buffets</h5></option>
+				<option value="Greek"><h5>Greek</h5></option>
+				<option value="Indian"><h5>Indian</h5></option>
+				<option value="SteakHouse"><h5>SteakHouse</h5></option>
+				<option value="Nightlife"><h5>Nightlife</h5></option>
+				<option value="Korean"><h5>Korean</h5></option>
+				<option value="Pizza"><h5>Pizza</h5></option>
+				<option value="Thai"><h5>Thai</h5></option>
+				<option value="Italian"><h5>Italian</h5></option>
+			</select>
+		    </div>
+		    </p>
+		    </br>
+		    <p>
+			<div class="pass" style= "color: #ffffff"><label for="goodFor"><h5>GOOD FOR</h5></label>
+			</br>
+			<select class="custom-select" name="goodFor">
+				<option value="" disabled selected>Choose Good For</option>
+				<option value="GoodForBrunch"><h5>Brunch</h5></option>
+				<option value="GoodForDinner"><h5>Dinner</h5></option>
+				<option value="GoodForBreakfast"><h5>Breakfast</h5></option>
+				<option value="GoodForLunch"><h5>Lunch</h5></option>
+				<option value="GoodForDessert"><h5>Dessert</h5></option>
+				<option value="GoodForLateNight"><h5>LateNight</h5></option>
+				<option value="GoodForKids"><h5>Kids</h5></option>
+				<option value="GoodForGroups"><h5>Groups</h5></option>
+			</select>
+		    </div>
+		    </br>
+		    </p>
+		    <p>
+				<div class="custom-select"><label for="wifi"><h5>WIFI SERVICE</h5></label>
+				<input type="checkbox" class="user" id="wifi" name="wifi" value="${fn:escapeXml(param.wifi)}"></div>
+		    </p>
+			<p>
+				<div class="custom-select"><label for="creditCard"><h5>ACCEPT CREDITCARD</h5></label>
+				<input type="checkbox" class="user" id="creditCard" name="creditCard" value="${fn:escapeXml(param.creditCard)}"></div>
+		    </p> 
+		 
 		      <p>
 				<input type = "submit">
 				<br/><br/>
@@ -104,7 +178,7 @@
 	                <th><h5>PriceRange</h5></th>
 	                <th><h5>Open</h5></th>
 	                <th><h5>Close</h5></th>
-	                <th><h5>Noise</h5></th>
+	                <!--<th><h5>Noise</h5></th>-->
 	                <!--<th><h5>Neighborhood</h5></th>-->
 	                <th><h5>Star</h5></th>
 	                <th><h5>Parking</h5></th>
@@ -112,6 +186,7 @@
 	                <th><h5>City</h5></th>
 	                <th><h5>State</h5></th>
 	                <th><h5>ZipCode</h5></th>
+	                <th><h5>Review</h5></th>
 	                <th><h5>Delete</h5></th>
 	                <th><h5>Update</h5></th>
 				</tr>
@@ -125,7 +200,7 @@
 						<td><c:out value="${rest.getPriceRange()}" /></td>
 						<td><fmt:formatDate value="${rest.getOpen()}" pattern="hh:mm:ss"/></td>
 						<td><fmt:formatDate value="${rest.getClose()}" pattern="hh:mm:ss"/></td>
-						<td><c:out value="${rest.getNoiseLevel()}" /></td>
+						<!-- <td><c:out value="${rest.getNoiseLevel()}" /></td>-->
 						<!--  <td><c:out value="${rest.getNeighborhood()}" /></td>-->
 						<td><c:out value="${rest.getStar()}" /></td>
 						<td><c:out value="${rest.getParking()}" /></td>
@@ -133,6 +208,7 @@
 						<td><c:out value="${rest.getCity()}" /></td>
 						<td><c:out value="${rest.getState()}" /></td>
 						<td><c:out value="${rest.getZipCode()}" /></td>
+						<td><a href="findreviews?restaurantId=<c:out value="${rest.getRestaurantId()}"/>">Review</a></td>
 	                    <td><a href="restaurantdelete?restaurantId=<c:out value="${rest.getRestaurantId()}"/>">Delete</a></td>
 	                    <td><a href="restaurantupdate?restaurantId=<c:out value="${rest.getRestaurantId()}"/>">Update</a></td>
 					</tr>
@@ -140,7 +216,7 @@
 				</c:forEach>
 			</table> 
 		</div> 
-		<div class="footer">
+		<div class="footer" style= "color: #ffffff;">
      <p><h5>Copyright &copy; 2015 Gourmet. All Rights Reserved | Design by BEE</h5></a></p>
 </div> 
 </div>

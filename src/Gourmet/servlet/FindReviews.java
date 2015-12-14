@@ -52,8 +52,7 @@ public class FindReviews extends HttpServlet{
 			e.printStackTrace();
 			throw new IOException(e);
 		}
-		
-		
+	
 		if(restaurantName != null && !restaurantName.trim().isEmpty()) {
 			for(Restaurants rest : restaurantList){
 				String restId = rest.getRestaurantId();
@@ -63,8 +62,6 @@ public class FindReviews extends HttpServlet{
 					e.printStackTrace();
 					throw new IOException(e);
 				}
-				
-
 				req.setAttribute("reviews", reviewList);
 			}
 		}else if(userName != null && !userName.trim().isEmpty()) {
@@ -91,35 +88,45 @@ public class FindReviews extends HttpServlet{
 		Map<String, String> messages = new HashMap<String, String>();
 		req.setAttribute("messages", messages);
 		List<Reviews> reviewList = new ArrayList<Reviews>();
+		List<Users> userList = new ArrayList<Users>();
+		List<Restaurants> restaurantList = new ArrayList<Restaurants>();
 		
 		// Retrieve and validate name.
         String userName = req.getParameter("username");
 		String restaurantName = req.getParameter("restaurantname");
-	
-		List<Users> userList = new ArrayList<Users>();
-		List<Restaurants> restaurantList = new ArrayList<Restaurants>();
+		String restaurantId = req.getParameter("restaurantId");
+		String userId = null;
 		
 		try {
 			userList = usersDao.getUsersFromUserName(userName);
+			if(!userList.isEmpty()){
+				Users user = userList.get(0);
+				userId = Integer.toString(user.getUserId());
+			}
+			
 			restaurantList = restaurantsDao.getRestaurantByName(restaurantName);
+			if(!restaurantList.isEmpty()){
+				Restaurants restaurant = restaurantList.get(0);
+				restaurantId = restaurant.getRestaurantId();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new IOException(e);
+		}
+			
+		Map<String,String> criteria = new HashMap<>();
+		criteria.put("UserId", userId);
+		criteria.put("RestaurantId", restaurantId);
+		
+		try {
+			reviewList = reviewsDao.getReviewsByCriteria(criteria);	
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new IOException(e);
 		}
 		
 		
-		if(restaurantName != null && !restaurantName.trim().isEmpty()) {
-			for(Restaurants rest : restaurantList){
-				String restId = rest.getRestaurantId();
-				System.out.println(" rId:" + restId);
-				try {
-					reviewList.addAll(reviewsDao.getReviewsByRestaurantId(restId));
-				} catch (SQLException e) {
-					continue;
-				}
-			}
-			req.setAttribute("reviews", reviewList);
-		}else if(userName != null && !userName.trim().isEmpty()) {
+		/*if(userName != null && !userName.trim().isEmpty()) {
 			for (Users user : userList) {
 				int userId = user.getUserId();
 				try {
@@ -130,7 +137,8 @@ public class FindReviews extends HttpServlet{
 				}
 			}
 			req.setAttribute("reviews", reviewList);
-		} 
+		}*/
+		req.setAttribute("reviews", reviewList);
 		req.getRequestDispatcher("/FindReviews.jsp").forward(req, resp);
 	}
 }

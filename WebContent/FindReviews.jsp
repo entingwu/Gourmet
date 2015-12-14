@@ -74,10 +74,16 @@
 				      ></div>
 				<div class="clear"></div>
 			  </p>
+			  <p>
+				<div class="pass"><label for="restaurantId"><h5>RESTAURANT ID</h5></label>
+				<input type="text" class="pass" id="restaurantId" name="restaurantId" value="${fn:escapeXml(param.restaurantId)}"
+				      ></div>
+				<div class="clear"></div>
+			  </p>
 		      <p>
 				<input type = "submit">
 				<br/><br/>
-				<span id = "successMessage"><b>${messages.success}</b></span>
+				<span id = "successMessage"><b><h5>${messages.success}</h5></b></span>
 			  </p>
 			</form>
 			<div id = "reviewCreate"><a href="reviewcreate"><h5>Create Review</h5></a></div>
